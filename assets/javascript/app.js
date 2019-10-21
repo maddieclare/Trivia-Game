@@ -41,8 +41,9 @@ function init() {
 // Starts timer (10 second countdown).
 function loadQuestion() {
   console.log(getRandomQuestion());
-  startCountdown();
+  timerStart
 }
+let timerStart = setInterval(timerRunning, 1000);
 
 //  Generates a random number between two integers.
 function getRandomNumber(min, max) {
@@ -60,18 +61,25 @@ function getRandomQuestion() {
   }
 }
 
-function startCountdown() {
-  setInterval(function() {
-    time--;
-    console.log(time);
-  }, 1000);
+
+
+function timerRunning() {
+  time--;
+  console.log(time);
+  if (time === 0) {
+    timeUp();
+  }
 }
 
-init();
-console.log("Wins: " + wins);
-console.log("Losses: " + losses);
+function timerPaused() {
+  clearInterval(timerStart);
+}
 
 // Time's up function - alert player that they have run out of time, increase loss count by one.
+function timeUp() {
+  timerPaused();
+  alert("Time's up!");
+}
 
 // Pick question function - filter all questions that haven't been asked already and return random from list.
 
@@ -84,3 +92,9 @@ console.log("Losses: " + losses);
 // Player win function - alert player that they have won, increase win count by one.
 
 // Call initialise function to restart game.
+
+// TESTING:
+
+init();
+console.log("Wins: " + wins);
+console.log("Losses: " + losses);
