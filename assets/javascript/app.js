@@ -1,24 +1,30 @@
-// List of trivia questions.
+// Global variables:
+    // time
+    // wins
+    // losses
 
-// List of possible answers for each question.
-// Mark one of these answers as correct.
+// Questions array.
+    // Each question is an object with options and one correct answer.
+    // Boolean attribute to check whether question has already been displayed (default = false).
 
-// Timer counting down 10 seconds per question.
+// Initialise function - loads question (sep. function), resets wins/losses.
 
-// Function tracking player guess.
+// Load question function:
+    // Pick random question from array and corresponding answer options (sep. function).
+    // Displays question and options to player (options in random order?). 
+    // Starts timer (10 second countdown).
+    // Sets used attribute in question object to true.
 
-// Function comparing player guess to correct answer.
+// Time's up function - alert player that they have run out of time, increase loss count by one.
 
-// If player guess is the same as the correct answer, display win page.
+// Pick question function - filter all questions that haven't been asked already and return random from list.
 
-// Otherwise, if player guess is incorrect, show lose page and display correct answer.
+// Player click function - on click event stores which answer player clicked in a variable.
 
-// Show time out page if player does not guess in time.
+    // Check answer function - evaluates whether player click matches correct answer attribute.
 
-// Track correct and incorrect answers (timeouts count as incorrect).
+    // If statement:
+        // Player loss function - alert player that they have lost, increase loss count by one.
+        // Player win function - alert player that they have won, increase win count by one.
 
-// Wait three seconds, then show a new question.
-
-    // Timer is reset to 10 seconds.
-
-// Function to restar the game once all questions have been displayed.
+// Call initialise function to restart game.
