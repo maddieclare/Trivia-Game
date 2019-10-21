@@ -2,6 +2,9 @@
 let time = 10;
 let wins = 0;
 let losses = 0;
+let currentQuestion;
+
+let timerStart = setInterval(timerRunning, 1000);
 
 // Questions array.
 // Each question is an object with options and one correct answer.
@@ -31,6 +34,7 @@ let questionArray = [
 // Call initialise function to restart game.
 function init() {
   loadQuestion();
+  timerStart;
   wins = 0;
   losses = 0;
   console.log("Wins: " + wins);
@@ -44,9 +48,7 @@ function init() {
 // Starts timer (10 second countdown).
 function loadQuestion() {
   console.log(getRandomQuestion());
-  timerStart;
 }
-let timerStart = setInterval(timerRunning, 1000);
 
 //  Generates a random number between two integers.
 function getRandomNumber(min, max) {
@@ -56,7 +58,7 @@ function getRandomNumber(min, max) {
 // Load random question function.
 // Filter all questions that haven't been asked already and return random from list.
 function getRandomQuestion() {
-  let currentQuestion = questionArray[getRandomNumber(0, 2)];
+  currentQuestion = questionArray[getRandomNumber(0, 2)];
   if (currentQuestion.alreadyAsked == true) {
     getQuestion();
   } else {
@@ -108,10 +110,6 @@ function playerLoses() {
 }
 
 // Check answer function - evaluates whether player click matches correct answer attribute.
-// If statement:
-// Player loss function - alert player that they have lost, increase loss count by one.
-// Player win function - alert player that they have won, increase win count by one.
-
-// TESTING:
-
-init();
+    // If statement:
+        // Player loss function - alert player that they have lost, increase loss count by one.
+        // Player win function - alert player that they have won, increase win count by one.

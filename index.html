@@ -26,7 +26,13 @@
           <!-- Blank for formatting -->
         </div>
         <div class="col-md-6">
-          <h2>Game goes here.</h2>>
+          <p class="current-question"></p>
+          <ul class="possible-answers">
+              <li id="option-1"></li>
+              <li id="option-2"></li>
+              <li id="option-3"></li>
+              <li id="option-4"></li>
+          </ul>
         </div>
         <div class="col-md-3">
           <!-- Blank for formatting -->
@@ -34,5 +40,14 @@
       </div>
     </div>
     <script src="assets/javascript/app.js"></script>
+
+    <script>
+      init();
+      $(".current-question").html(currentQuestion.question);
+      $("#option-1").html(currentQuestion.options[0]);
+      $("#option-2").html(currentQuestion.options[1]);
+      $("#option-3").html(currentQuestion.options[2]);
+      $("#option-4").html(currentQuestion.options[3]);
+    </script>
   </body>
 </html>
