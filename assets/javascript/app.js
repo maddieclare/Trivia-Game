@@ -6,7 +6,6 @@ let losses = 0;
 // Questions array.
 // Each question is an object with options and one correct answer.
 // Boolean attribute to check whether question has already been displayed (default = false).
-
 let questionArray = [
   {
     question: "What is the second most commonly-spoken language in the world?",
@@ -31,12 +30,14 @@ let questionArray = [
 // Initialise function - loads question (sep. function), resets wins/losses.
 function init() {
   loadQuestion();
+  wins = 0;
+  losses = 0;
 }
 
 // Load question function:
 // Pick random question from array and corresponding answer options (sep. function).
 // Sets used attribute in question object to true.
-// Displays question and options to player (options in random order?).
+// Displays question and options to player (options in random order).
 // Starts timer (10 second countdown).
 function loadQuestion() {
   console.log(getRandomQuestion());
@@ -54,6 +55,7 @@ function getRandomQuestion() {
     if (currentQuestion.alreadyAsked == true) {
         getQuestion();
     } else {
+        currentQuestion.alreadyAsked = true;
         return(currentQuestion);
     }
 }
