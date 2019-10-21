@@ -1,5 +1,5 @@
 // Global variables:
-let time = 0;
+let time = 10;
 let wins = 0;
 let losses = 0;
 
@@ -41,26 +41,35 @@ function init() {
 // Starts timer (10 second countdown).
 function loadQuestion() {
   console.log(getRandomQuestion());
-//   startCountdown();
+  startCountdown();
 }
 
 //  Generates a random number between two integers.
 function getRandomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
+  return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 // Load random question function.
 function getRandomQuestion() {
-    let currentQuestion = questionArray[getRandomNumber(0, 2)];
-    if (currentQuestion.alreadyAsked == true) {
-        getQuestion();
-    } else {
-        currentQuestion.alreadyAsked = true;
-        return(currentQuestion);
-    }
+  let currentQuestion = questionArray[getRandomNumber(0, 2)];
+  if (currentQuestion.alreadyAsked == true) {
+    getQuestion();
+  } else {
+    currentQuestion.alreadyAsked = true;
+    return currentQuestion;
+  }
 }
 
-loadQuestion();
+function startCountdown() {
+  setInterval(function() {
+    time--;
+    console.log(time);
+  }, 1000);
+}
+
+init();
+console.log("Wins: " + wins);
+console.log("Losses: " + losses);
 
 // Time's up function - alert player that they have run out of time, increase loss count by one.
 
