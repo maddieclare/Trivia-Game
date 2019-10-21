@@ -28,10 +28,13 @@ let questionArray = [
 ];
 
 // Initialise function - loads question (sep. function), resets wins/losses.
+// Call initialise function to restart game.
 function init() {
   loadQuestion();
   wins = 0;
   losses = 0;
+  console.log("Wins: " + wins);
+  console.log("Losses: " + losses);
 }
 
 // Load question function:
@@ -41,7 +44,7 @@ function init() {
 // Starts timer (10 second countdown).
 function loadQuestion() {
   console.log(getRandomQuestion());
-  timerStart
+  timerStart;
 }
 let timerStart = setInterval(timerRunning, 1000);
 
@@ -51,6 +54,7 @@ function getRandomNumber(min, max) {
 }
 
 // Load random question function.
+// Filter all questions that haven't been asked already and return random from list.
 function getRandomQuestion() {
   let currentQuestion = questionArray[getRandomNumber(0, 2)];
   if (currentQuestion.alreadyAsked == true) {
@@ -60,8 +64,6 @@ function getRandomQuestion() {
     return currentQuestion;
   }
 }
-
-
 
 function timerRunning() {
   time--;
@@ -79,22 +81,37 @@ function timerPaused() {
 function timeUp() {
   timerPaused();
   alert("Time's up!");
+  losses++;
+  console.log("Wins: " + wins);
+  console.log("Losses: " + losses);
 }
 
-// Pick question function - filter all questions that haven't been asked already and return random from list.
-
 // Player click function - on click event stores which answer player clicked in a variable.
+function playerGuess() {
+  // stuff here
+}
+
+function playerWins() {
+  timerPaused();
+  alert("You win!");
+  wins++;
+  console.log("Wins: " + wins);
+  console.log("Losses: " + losses);
+}
+
+function playerLoses() {
+  timerPaused();
+  alert("You lose :(");
+  losses++;
+  console.log("Wins: " + wins);
+  console.log("Losses: " + losses);
+}
 
 // Check answer function - evaluates whether player click matches correct answer attribute.
-
 // If statement:
 // Player loss function - alert player that they have lost, increase loss count by one.
 // Player win function - alert player that they have won, increase win count by one.
 
-// Call initialise function to restart game.
-
 // TESTING:
 
 init();
-console.log("Wins: " + wins);
-console.log("Losses: " + losses);
