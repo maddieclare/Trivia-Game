@@ -34,11 +34,18 @@ let questionArray = [
 // Call initialise function to restart game.
 function init() {
   loadQuestion();
+  resetQuestionsUsed();
   timerStart;
   wins = 0;
   losses = 0;
   console.log("Wins: " + wins);
   console.log("Losses: " + losses);
+}
+
+function resetQuestionsUsed() {
+    questionArray.forEach(question) >= {
+        question.alreadyAsked == false;
+    }
 }
 
 // Load question function:
@@ -89,8 +96,16 @@ function timeUp() {
 }
 
 // Player click function - on click event stores which answer player clicked in a variable.
-function playerGuess() {
-  // stuff here
+function playerGuess(optionId) {
+  checkAnswer(optionId);
+}
+
+function checkAnswer(clickedAnswer) {
+    if (clickedAnswer === currentQuestion.correctAnswer) {
+        playerWins();
+    } else {
+        playerLoses();
+    }
 }
 
 function playerWins() {
