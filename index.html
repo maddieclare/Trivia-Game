@@ -10,7 +10,7 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+    
     <script src="https://code.jquery.com/jquery.js"></script>
     <title>Trivia Game</title>
   </head>
@@ -40,20 +40,28 @@
         </div>
       </div>
     </div>
-    <script src="assets/javascript/app.js"></script>
+    <script src="C:\Users\3xp3d\Dropbox\Cadre Engineering\Website\app.js"></script>
 
     <script>
       init();
+
+     
       $(".current-question").html(currentQuestion.question);
       $("#option-1").html(currentQuestion.options[0]);
       $("#option-2").html(currentQuestion.options[1]);
       $("#option-3").html(currentQuestion.options[2]);
       $("#option-4").html(currentQuestion.options[3]);
-
+      
       $(".possible-answers").on("click", function(event) {
         playerGuess($("#" + event.currentTarget.id).html());
+        setTimeout(()=>{
+            $(".current-question").html(currentQuestion.question);
+            $("#option-1").html(currentQuestion.options[0]);
+            $("#option-2").html(currentQuestion.options[1]);
+            $("#option-3").html(currentQuestion.options[2]);
+            $("#option-4").html(currentQuestion.options[3]);
+        },1000)
       });
-
       $("#reset-button").on("click", function() {
         init();
         $(".current-question").html(currentQuestion.question);

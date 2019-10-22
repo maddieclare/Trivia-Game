@@ -30,6 +30,8 @@ let questionArray = [
   }
 ];
 
+
+
 // Initialise function - loads question (sep. function), resets wins/losses.
 // Call initialise function to restart game.
 function init() {
@@ -43,9 +45,9 @@ function init() {
 }
 
 function resetQuestionsUsed() {
-    questionArray.forEach(question) >= {
-        question.alreadyAsked == false;
-    }
+    questionArray.forEach(function(question) {
+        question.alreadyAsked = false;
+    })
 }
 
 // Load question function:
@@ -54,7 +56,8 @@ function resetQuestionsUsed() {
 // Displays question and options to player (options in random order).
 // Starts timer (10 second countdown).
 function loadQuestion() {
-  console.log(getRandomQuestion());
+  getRandomQuestion()
+    console.log(currentQuestion);
 }
 
 //  Generates a random number between two integers.
@@ -65,11 +68,12 @@ function getRandomNumber(min, max) {
 // Load random question function.
 // Filter all questions that haven't been asked already and return random from list.
 function getRandomQuestion() {
-  currentQuestion = questionArray[getRandomNumber(0, 2)];
+  let randomQuestionIndex = getRandomNumber(0,questionArray.length-1)  
+  currentQuestion = questionArray[randomQuestionIndex];
   if (currentQuestion.alreadyAsked == true) {
-    getQuestion();
+    return getRandomQuestion()
   } else {
-    currentQuestion.alreadyAsked = true;
+    questionArray[randomQuestionIndex].alreadyAsked = true
     return currentQuestion;
   }
 }
@@ -89,10 +93,11 @@ function timerPaused() {
 // Time's up function - alert player that they have run out of time, increase loss count by one.
 function timeUp() {
   timerPaused();
-  alert("Time's up!");
+  console.log("Time's up!");
   losses++;
   console.log("Wins: " + wins);
   console.log("Losses: " + losses);
+  loadQuestion()
 }
 
 // Player click function - on click event stores which answer player clicked in a variable.
@@ -110,18 +115,20 @@ function checkAnswer(clickedAnswer) {
 
 function playerWins() {
   timerPaused();
-  alert("You win!");
+  console.log("You Win!");
   wins++;
   console.log("Wins: " + wins);
   console.log("Losses: " + losses);
+  loadQuestion()
 }
 
 function playerLoses() {
   timerPaused();
-  alert("You lose :(");
+  console.log("You lose :(");
   losses++;
   console.log("Wins: " + wins);
   console.log("Losses: " + losses);
+  loadQuestion()
 }
 
 // Check answer function - evaluates whether player click matches correct answer attribute.
