@@ -15,128 +15,219 @@
     <title>Trivia Game</title>
   </head>
   <body>
-    <div class="row">
-      <div class="col-md-12">
-        <h1>Trivia Game!</h1>
-      </div>
-    </div>
-    <div class="row">
-      <div class="container game">
-        <div class="col-md-3">
-          <!-- Blank for formatting -->
-        </div>
-        <div class="col-md-6">
-          <p class="current-question"></p>
-          <ul>
-            <li><button class="possible-answers" id="option-1"></button></li>
-            <li><button class="possible-answers" id="option-2"></button></li>
-            <li><button class="possible-answers" id="option-3"></button></li>
-            <li><button class="possible-answers" id="option-4"></button></li>
-          </ul>
-          <button id="reset-button">Reset</button>
-        </div>
-        <div class="col-md-3">
-          <!-- Blank for formatting -->
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 jumbotron text-center title bg-primary">
+          <h1 class="text-light">Trivia Game!</h1>
         </div>
       </div>
-    </div>
-    <script src="assets/javascript/app.js"></script>
+      <div class="row">
+        <div class="alerts">
+          <h2 class="correct-incorrect"></h2>
+          <p class="final-wins"></p>
+          <p class="final-losses"></p>
+          <p class="correct-answer"></p>
+          <p class="next-question">Loading next question...</p>
+          <button class="reset-button btn-primary">Restart</button>
+        </div>
+        <div class="container game">
+          <div class="card">
+            <h2 class="timer text-center">Time remaining: 10</h2>
+            <br />
+            <h3 class="current-question text-center"></h3>
+            <br />
+            <div class="card-body">
+              <button
+                type="button"
+                class="btn btn-primary btn-lg btn-block possible-answers"
+                id="option-1"
+              ></button>
+              <button
+                type="button"
+                class="btn btn-primary btn-lg btn-block possible-answers"
+                id="option-2"
+              ></button>
+              <button
+                type="button"
+                class="btn btn-primary btn-lg btn-block possible-answers"
+                id="option-3"
+              ></button>
+              <button
+                type="button"
+                class="btn btn-primary btn-lg btn-block possible-answers"
+                id="option-4"
+              ></button>
+            </div>
+          </div>
+          <br />
+          <div class="row text-center">
+            <div class="col-md-6">
+              <span class="score" id="wins">Wins: 0</span>
+            </div>
+            <div class="col-md-6">
+              <span class="score" id="losses">Losses: 0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <script src="assets/javascript/app.js"></script>
 
-    <script>
-      let timer;
-      let time = 10;
+      <script>
+        let timer;
+        let time = 10;
 
-      initialiseHTML();
-
-      function initialiseHTML() {
-        init();
-        loadQuestion();
-      }
-
-      function loadQuestion() {
-        let currentQuestion = getNextQuestion();
-        if (currentQuestion !== "Game over") {
-          $(".current-question").html(currentQuestion.question);
-          $("#option-1").html(currentQuestion.options[0]);
-          $("#option-2").html(currentQuestion.options[1]);
-          $("#option-3").html(currentQuestion.options[2]);
-          $("#option-4").html(currentQuestion.options[3]);
-
-          startTimer();
-        } else {
-          gameOverScreen();
-        }
-      }
-
-      function startTimer() {
-        timer = setInterval(timerRunning, 1000);
-      }
-
-      function timerRunning() {
-        time--;
-        console.log(time);
-        if (time === 0) {
-          stopTimer();
-          timesUpScreen();
-        }
-      }
-
-      function stopTimer() {
-        clearInterval(timer);
-        time = 10;
-      }
-
-      $(".possible-answers").on("click", function(event) {
-        stopTimer();
-        let result = playerGuess($("#" + event.currentTarget.id).html());
-        switch (result) {
-          case "Win":
-            winScreen();
-            break;
-          case "Lose":
-            loseScreen();
-            break;
-          case "Times Up":
-            timesUpScreen();
-            break;
-          default:
-            console.log("Error");
-        }
-      });
-
-      function winScreen() {
-        // Add CSS for win.
-        console.log("You win!");
-        refreshScores();
-        setTimeout(loadQuestion(), 1000);
-      }
-
-      function loseScreen() {
-        // Add CSS for lose.
-        console.log("You lose :(");
-        refreshScores();
-        setTimeout(loadQuestion(), 1000);
-      }
-
-      function timesUpScreen() {
-        // Add CSS for time up.
-        console.log("You ran out of time :(");
-        refreshScores();
-        setTimeout(loadQuestion(), 1000);
-      }
-
-      function gameOverScreen() {
-        // Add CSS for game over.
-        console.log("Game over.");
-      }
-
-      function refreshScores() {
-        // Use jQuery to update the wins, loss and remaining questions counter displays.
-      }
-
-      $("#reset-button").on("click", function() {
         initialiseHTML();
-      });
-    </script>
+
+        function initialiseHTML() {
+          init();
+          loadQuestion();
+        }
+
+        // Displays question and options to player.
+        function loadQuestion() {
+          let currentQuestion = getNextQuestion();
+          if (currentQuestion !== "Game over") {
+            $(".alerts").hide();
+            $(".game").show();
+            $(".current-question").html(currentQuestion.question);
+            $("#option-1").html(currentQuestion.options[0]);
+            $("#option-2").html(currentQuestion.options[1]);
+            $("#option-3").html(currentQuestion.options[2]);
+            $("#option-4").html(currentQuestion.options[3]);
+
+            startTimer();
+          } else {
+            gameOverScreen();
+          }
+        }
+
+        // Starts timer (10 second countdown).
+        function startTimer() {
+          timer = setInterval(timerRunning, 1000);
+        }
+
+        function timerRunning() {
+          time--;
+          $(".timer").html("<h2>" + "Time remaining: " + time + "<h2>");
+          if (time === 0) {
+            stopTimer();
+            timesUpScreen();
+          }
+        }
+
+        function stopTimer() {
+          clearInterval(timer);
+          time = 10;
+        }
+
+        // Player click function - on click event stores which answer player clicked in a variable.
+        $(".possible-answers").on("click", function(event) {
+          stopTimer();
+          let result = playerGuess($("#" + event.currentTarget.id).html());
+          switch (result) {
+            case "Win":
+              winScreen();
+              break;
+            case "Lose":
+              loseScreen();
+              break;
+            case "Times Up":
+              timesUpScreen();
+              break;
+            default:
+              console.log("Error");
+          }
+        });
+
+        function winScreen() {
+          stopTimer();
+          $(".game").hide();
+          $(".alerts").show();
+          $(".final-wins").hide();
+          $(".final-losses").hide();
+          $(".correct-incorrect")
+            .show()
+            .text("Correct!");
+          $(".correct-answer").hide();
+          $(".next-question").show();
+          $(".reset-button").hide();
+          refreshScores();
+          setTimeout(function() {
+            loadQuestion();
+          }, 2000);
+        }
+
+        function loseScreen() {
+          stopTimer();
+          $(".game").hide();
+          $(".alerts").show();
+          $(".final-wins").hide();
+          $(".final-losses").hide();
+          $(".correct-incorrect")
+            .show()
+            .text("Incorrect!");
+          $(".correct-answer")
+            .show()
+            .text("Correct answer: " + currentQuestion.correctAnswer);
+          $(".next-question").show();
+          $(".reset-button").hide();
+          refreshScores();
+          setTimeout(function() {
+            loadQuestion();
+          }, 2000);
+        }
+
+        // Time's up function - alert player that they have run out of time, increase loss count by one.
+        function timesUpScreen() {
+          stopTimer();
+          $(".game").hide();
+          $(".alerts").show();
+          $(".final-wins").hide();
+          $(".final-losses").hide();
+          $(".correct-incorrect")
+            .show()
+            .text("Time's up!");
+          $(".correct-answer")
+            .show()
+            .text("Correct answer: " + currentQuestion.correctAnswer);
+          $(".next-question").show();
+          $(".reset-button").hide();
+          playerLoses();
+          refreshScores();
+          setTimeout(function() {
+            loadQuestion();
+          }, 2000);
+        }
+
+        function gameOverScreen() {
+          $(".game").hide();
+          $(".alerts").show();
+          $(".correct-incorrect")
+            .show()
+            .text("Game over! Thanks for playing.");
+          $(".final-wins")
+            .show()
+            .text("Total questions correct: " + wins);
+          $(".final-losses")
+            .show()
+            .text("Total questions incorrect: " + losses);
+          $(".correct-answer").hide();
+          $(".next-question").hide();
+          $(".reset-button").show();
+          stopTimer();
+        }
+
+        function refreshScores() {
+          $("#wins").html("Wins: " + wins);
+          $("#losses").html("Losses: " + losses);
+        }
+
+        $(".reset-button").on("click", function() {
+          initialiseHTML();
+          refreshScores();
+        });
+      </script>
+    </div>
   </body>
 </html>

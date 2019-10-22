@@ -15,15 +15,58 @@ let questionArray = [
     alreadyAsked: false
   },
   {
-    question: "Which language has the longest alphabet?",
-    correctAnswer: "Cambodian",
-    options: ["Russian", "Japanese", "Hawaiian", "Cambodian"],
+    question: "How many tails does a Manx cat have?",
+    correctAnswer: "0",
+    options: ["1", "4", "9", "0"],
     alreadyAsked: false
   },
   {
-    question: "Approximately how many languages are spoken today?",
-    correctAnswer: "7000",
-    options: ["7000", "10000", "2500", "800"],
+    question: "Which sea creature has three hearts?",
+    correctAnswer: "Octopus",
+    options: ["Octopus", "Blue whale", "Jellyfish", "Mermaid"],
+    alreadyAsked: false
+  },
+  {
+    question: "How many bones (on average) does an adult human have?",
+    correctAnswer: "206",
+    options: ["540", "111", "1098", "206"],
+    alreadyAsked: false
+  },
+  {
+    question: "What is the national flower of Wales?",
+    correctAnswer: "Daffodil",
+    options: ["Rose", "Daffodil", "Dandelion", "Nettle"],
+    alreadyAsked: false
+  },
+  {
+    question: "Which city does the River Lagan flow through?",
+    correctAnswer: "Belfast",
+    options: ["London", "Prague", "Singapore", "Belfast"],
+    alreadyAsked: false
+  },
+  {
+    question:
+      "What did A.E. Frick invent in 1887, which are now worn daily by millions of people?",
+    correctAnswer: "Contact lenses",
+    options: ["Contact lenses", "Sunglasses", "Handbags", "Jeggings"],
+    alreadyAsked: false
+  },
+  {
+    question: "How many points does a compass have?",
+    correctAnswer: "32",
+    options: ["4", "8", "16", "32"],
+    alreadyAsked: false
+  },
+  {
+    question: "How many American cents make up a dime?",
+    correctAnswer: "10",
+    options: ["50", "10", "25", "12"],
+    alreadyAsked: false
+  },
+  {
+    question: "How many lines should a limerick have?",
+    correctAnswer: "5",
+    options: ["7", "2", "5", "10"],
     alreadyAsked: false
   }
 ];
@@ -46,12 +89,6 @@ function resetQuestionsUsed() {
   });
 }
 
-// Load question function:
-// Pick random question from array and corresponding answer options (sep. function).
-// Sets used attribute in question object to true.
-// Displays question and options to player (options in random order).
-// Starts timer (10 second countdown).
-
 //  Generates a random number between two integers.
 function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -66,6 +103,7 @@ function getNextQuestion() {
     if (currentQuestion.alreadyAsked == true) {
       return getNextQuestion();
     } else {
+      // Sets used attribute in question object to true.
       questionArray[randomQuestionIndex].alreadyAsked = true;
       numberOfQuestionsAsked++;
       return currentQuestion;
@@ -75,11 +113,9 @@ function getNextQuestion() {
   }
 }
 
-// Time's up function - alert player that they have run out of time, increase loss count by one.
-
-// Player click function - on click event stores which answer player clicked in a variable.
-
+// Check answer function - evaluates whether player click matches correct answer attribute.
 function playerGuess(clickedAnswer) {
+  // If statement:
   if (clickedAnswer === currentQuestion.correctAnswer) {
     playerWins();
     return "Win";
@@ -89,6 +125,7 @@ function playerGuess(clickedAnswer) {
   }
 }
 
+// Player win function - alert player that they have won, increase win count by one.
 function playerWins() {
   console.log("You win!");
   wins++;
@@ -96,14 +133,10 @@ function playerWins() {
   console.log("Losses: " + losses);
 }
 
+// Player loss function - alert player that they have lost, increase loss count by one.
 function playerLoses() {
   console.log("You lose :(");
   losses++;
   console.log("Wins: " + wins);
   console.log("Losses: " + losses);
 }
-
-// Check answer function - evaluates whether player click matches correct answer attribute.
-// If statement:
-// Player loss function - alert player that they have lost, increase loss count by one.
-// Player win function - alert player that they have won, increase win count by one.
