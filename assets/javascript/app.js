@@ -41,7 +41,7 @@ function init() {
 }
 
 function resetQuestionsUsed() {
-  questionArray.forEach(question => {
+  questionArray.forEach(function(question) {
     question.alreadyAsked = false;
   });
 }
@@ -71,20 +71,21 @@ function getNextQuestion() {
       return currentQuestion;
     }
   } else {
-    return "Game over!";
+    return "Game over";
   }
 }
 
 // Time's up function - alert player that they have run out of time, increase loss count by one.
 
 // Player click function - on click event stores which answer player clicked in a variable.
+
 function playerGuess(clickedAnswer) {
   if (clickedAnswer === currentQuestion.correctAnswer) {
     playerWins();
-    return "Win"
+    return "Win";
   } else {
     playerLoses();
-    return "Lose"
+    return "Lose";
   }
 }
 

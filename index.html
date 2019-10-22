@@ -55,7 +55,7 @@
 
       function loadQuestion() {
         let currentQuestion = getNextQuestion();
-        if (currentQuestion !== "Game Over") {
+        if (currentQuestion !== "Game over") {
           $(".current-question").html(currentQuestion.question);
           $("#option-1").html(currentQuestion.options[0]);
           $("#option-2").html(currentQuestion.options[1]);
@@ -105,29 +105,29 @@
       });
 
       function winScreen() {
-        // Add code for win.
+        // Add CSS for win.
         console.log("You win!");
         refreshScores();
         setTimeout(loadQuestion(), 1000);
       }
 
       function loseScreen() {
-        // Add  CSS for lose.
+        // Add CSS for lose.
         console.log("You lose :(");
         refreshScores();
         setTimeout(loadQuestion(), 1000);
       }
 
       function timesUpScreen() {
-        // Add CSS for time out.
-        console.log("Time's up!");
+        // Add CSS for time up.
+        console.log("You ran out of time :(");
         refreshScores();
         setTimeout(loadQuestion(), 1000);
       }
 
       function gameOverScreen() {
         // Add CSS for game over.
-        console.log("Game Over");
+        console.log("Game over.");
       }
 
       function refreshScores() {
