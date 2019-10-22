@@ -10,7 +10,7 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
-    
+
     <script src="https://code.jquery.com/jquery.js"></script>
     <title>Trivia Game</title>
   </head>
@@ -40,35 +40,102 @@
         </div>
       </div>
     </div>
-    <script src="C:\Users\3xp3d\Dropbox\Cadre Engineering\Website\app.js"></script>
+    <script src="assets/javascript/app.js"></script>
 
     <script>
-      init();
+      let timer;
+      let time = 10;
 
-      
-      $(".current-question").html(currentQuestion.question);
-      $("#option-1").html(currentQuestion.options[0]);
-      $("#option-2").html(currentQuestion.options[1]);
-      $("#option-3").html(currentQuestion.options[2]);
-      $("#option-4").html(currentQuestion.options[3]);
-      
-      $(".possible-answers").on("click", function(event) {
-        playerGuess($("#" + event.currentTarget.id).html());
-        setTimeout(()=>{
-            $(".current-question").html(currentQuestion.question);
-            $("#option-1").html(currentQuestion.options[0]);
-            $("#option-2").html(currentQuestion.options[1]);
-            $("#option-3").html(currentQuestion.options[2]);
-            $("#option-4").html(currentQuestion.options[3]);
-        },1000)
-      });
-      $("#reset-button").on("click", function() {
+      initialiseHTML();
+
+      function initialiseHTML() {
         init();
-        $(".current-question").html(currentQuestion.question);
-        $("#option-1").html(currentQuestion.options[0]);
-        $("#option-2").html(currentQuestion.options[1]);
-        $("#option-3").html(currentQuestion.options[2]);
-        $("#option-4").html(currentQuestion.options[3]);
+        loadQuestion();
+      }
+
+      function loadQuestion() {
+        let currentQuestion = getNextQuestion();
+        if (currentQuestion !== "Game Over") {
+          $(".current-question").html(currentQuestion.question);
+          $("#option-1").html(currentQuestion.options[0]);
+          $("#option-2").html(currentQuestion.options[1]);
+          $("#option-3").html(currentQuestion.options[2]);
+          $("#option-4").html(currentQuestion.options[3]);
+
+          startTimer();
+        } else {
+          gameOverScreen();
+        }
+      }
+
+      function startTimer() {
+        timer = setInterval(timerRunning, 1000);
+      }
+
+      function timerRunning() {
+        time--;
+        console.log(time);
+        if (time === 0) {
+          stopTimer();
+          timesUpScreen();
+        }
+      }
+
+      function stopTimer() {
+        clearInterval(timer);
+        time = 10;
+      }
+
+      $(".possible-answers").on("click", function(event) {
+        stopTimer();
+        let result = playerGuess($("#" + event.currentTarget.id).html());
+        switch (result) {
+          case "Win":
+            winScreen();
+            break;
+          case "Lose":
+            loseScreen();
+            break;
+          case "Times Up":
+            timesUpScreen();
+            break;
+          default:
+            console.log("Error");
+        }
+      });
+
+      function winScreen() {
+        // Add code for win.
+        console.log("You win!");
+        refreshScores();
+        setTimeout(loadQuestion(), 1000);
+      }
+
+      function loseScreen() {
+        // Add  CSS for lose.
+        console.log("You lose :(");
+        refreshScores();
+        setTimeout(loadQuestion(), 1000);
+      }
+
+      function timesUpScreen() {
+        // Add CSS for time out.
+        console.log("Time's up!");
+        refreshScores();
+        setTimeout(loadQuestion(), 1000);
+      }
+
+      function gameOverScreen() {
+        // Add CSS for game over.
+        console.log("Game Over");
+      }
+
+      function refreshScores() {
+        // Use jQuery to update the wins, loss and remaining questions counter displays.
+      }
+
+      $("#reset-button").on("click", function() {
+        initialiseHTML();
       });
     </script>
   </body>

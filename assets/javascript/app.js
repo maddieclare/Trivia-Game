@@ -1,10 +1,8 @@
 // Global variables:
-let time = 10;
 let wins = 0;
 let losses = 0;
 let currentQuestion;
 let numberOfQuestionsAsked = 0;
-let timer;
 
 // Questions array.
 // Each question is an object with options and one correct answer.
@@ -33,7 +31,6 @@ let questionArray = [
 // Initialise function - loads question (sep. function), resets wins/losses.
 // Call initialise function to restart game.
 function init() {
-  loadQuestion();
   resetQuestionsUsed();
 
   wins = 0;
@@ -44,7 +41,7 @@ function init() {
 }
 
 function resetQuestionsUsed() {
-  questionArray.forEach(function(question) {
+  questionArray.forEach(question => {
     question.alreadyAsked = false;
   });
 }
@@ -54,11 +51,6 @@ function resetQuestionsUsed() {
 // Sets used attribute in question object to true.
 // Displays question and options to player (options in random order).
 // Starts timer (10 second countdown).
-function loadQuestion() {
-  getRandomQuestion();
-  console.log(currentQuestion);
-  setTimeout(startTimer(), 1000);
-}
 
 //  Generates a random number between two integers.
 function getRandomNumber(min, max) {
@@ -67,83 +59,47 @@ function getRandomNumber(min, max) {
 
 // Load random question function.
 // Filter all questions that haven't been asked already and return random from list.
-function getRandomQuestion() {
+function getNextQuestion() {
   if (numberOfQuestionsAsked !== questionArray.length) {
     let randomQuestionIndex = getRandomNumber(0, questionArray.length - 1);
     currentQuestion = questionArray[randomQuestionIndex];
     if (currentQuestion.alreadyAsked == true) {
-      return getRandomQuestion();
+      return getNextQuestion();
     } else {
       questionArray[randomQuestionIndex].alreadyAsked = true;
       numberOfQuestionsAsked++;
       return currentQuestion;
     }
   } else {
-    return gameOver();
+    return "Game over!";
   }
-}
-
-function startTimer() {
-  timer = setInterval(timerRunning, 1000);
-}
-
-function timerRunning() {
-  time--;
-  console.log(time);
-  if (time === 0) {
-    timeUp();
-  }
-}
-
-function timerPaused() {
-  clearInterval(timer);
 }
 
 // Time's up function - alert player that they have run out of time, increase loss count by one.
-function timeUp() {
-  timerPaused();
-  time = 10;
-  console.log("Time's up!");
-  losses++;
-  console.log("Wins: " + wins);
-  console.log("Losses: " + losses);
-  loadQuestion();
-}
 
 // Player click function - on click event stores which answer player clicked in a variable.
-function playerGuess(optionId) {
-  checkAnswer(optionId);
-}
-
-function checkAnswer(clickedAnswer) {
+function playerGuess(clickedAnswer) {
   if (clickedAnswer === currentQuestion.correctAnswer) {
     playerWins();
+    return "Win"
   } else {
     playerLoses();
+    return "Lose"
   }
 }
 
 function playerWins() {
-  timerPaused();
-  console.log("You Win!");
+  console.log("You win!");
   wins++;
   console.log("Wins: " + wins);
   console.log("Losses: " + losses);
-  loadQuestion();
 }
 
 function playerLoses() {
-  timerPaused();
   console.log("You lose :(");
   losses++;
   console.log("Wins: " + wins);
   console.log("Losses: " + losses);
-  loadQuestion();
-}
-
-function gameOver() {
-  console.log("Game Over");
-  init();
 }
 
 // Check answer function - evaluates whether player click matches correct answer attribute.
