@@ -3,8 +3,8 @@ let time = 10;
 let wins = 0;
 let losses = 0;
 let currentQuestion;
-
-let timerStart = setInterval(timerRunning, 1000);
+let numberOfQuestionsAsked = 0;
+let timer;
 
 // Questions array.
 // Each question is an object with options and one correct answer.
@@ -30,24 +30,23 @@ let questionArray = [
   }
 ];
 
-
-
 // Initialise function - loads question (sep. function), resets wins/losses.
 // Call initialise function to restart game.
 function init() {
   loadQuestion();
   resetQuestionsUsed();
-  timerStart;
+
   wins = 0;
   losses = 0;
+  numberOfQuestionsAsked = 0;
   console.log("Wins: " + wins);
   console.log("Losses: " + losses);
 }
 
 function resetQuestionsUsed() {
-    questionArray.forEach(function(question) {
-        question.alreadyAsked = false;
-    })
+  questionArray.forEach(function(question) {
+    question.alreadyAsked = false;
+  });
 }
 
 // Load question function:
@@ -56,8 +55,9 @@ function resetQuestionsUsed() {
 // Displays question and options to player (options in random order).
 // Starts timer (10 second countdown).
 function loadQuestion() {
-  getRandomQuestion()
-    console.log(currentQuestion);
+  getRandomQuestion();
+  console.log(currentQuestion);
+  setTimeout(startTimer(), 1000);
 }
 
 //  Generates a random number between two integers.
@@ -68,14 +68,23 @@ function getRandomNumber(min, max) {
 // Load random question function.
 // Filter all questions that haven't been asked already and return random from list.
 function getRandomQuestion() {
-  let randomQuestionIndex = getRandomNumber(0,questionArray.length-1)  
-  currentQuestion = questionArray[randomQuestionIndex];
-  if (currentQuestion.alreadyAsked == true) {
-    return getRandomQuestion()
+  if (numberOfQuestionsAsked !== questionArray.length) {
+    let randomQuestionIndex = getRandomNumber(0, questionArray.length - 1);
+    currentQuestion = questionArray[randomQuestionIndex];
+    if (currentQuestion.alreadyAsked == true) {
+      return getRandomQuestion();
+    } else {
+      questionArray[randomQuestionIndex].alreadyAsked = true;
+      numberOfQuestionsAsked++;
+      return currentQuestion;
+    }
   } else {
-    questionArray[randomQuestionIndex].alreadyAsked = true
-    return currentQuestion;
+    return gameOver();
   }
+}
+
+function startTimer() {
+  timer = setInterval(timerRunning, 1000);
 }
 
 function timerRunning() {
@@ -87,17 +96,18 @@ function timerRunning() {
 }
 
 function timerPaused() {
-  clearInterval(timerStart);
+  clearInterval(timer);
 }
 
 // Time's up function - alert player that they have run out of time, increase loss count by one.
 function timeUp() {
   timerPaused();
+  time = 10;
   console.log("Time's up!");
   losses++;
   console.log("Wins: " + wins);
   console.log("Losses: " + losses);
-  loadQuestion()
+  loadQuestion();
 }
 
 // Player click function - on click event stores which answer player clicked in a variable.
@@ -106,11 +116,11 @@ function playerGuess(optionId) {
 }
 
 function checkAnswer(clickedAnswer) {
-    if (clickedAnswer === currentQuestion.correctAnswer) {
-        playerWins();
-    } else {
-        playerLoses();
-    }
+  if (clickedAnswer === currentQuestion.correctAnswer) {
+    playerWins();
+  } else {
+    playerLoses();
+  }
 }
 
 function playerWins() {
@@ -119,7 +129,7 @@ function playerWins() {
   wins++;
   console.log("Wins: " + wins);
   console.log("Losses: " + losses);
-  loadQuestion()
+  loadQuestion();
 }
 
 function playerLoses() {
@@ -128,10 +138,15 @@ function playerLoses() {
   losses++;
   console.log("Wins: " + wins);
   console.log("Losses: " + losses);
-  loadQuestion()
+  loadQuestion();
+}
+
+function gameOver() {
+  console.log("Game Over");
+  init();
 }
 
 // Check answer function - evaluates whether player click matches correct answer attribute.
-    // If statement:
-        // Player loss function - alert player that they have lost, increase loss count by one.
-        // Player win function - alert player that they have won, increase win count by one.
+// If statement:
+// Player loss function - alert player that they have lost, increase loss count by one.
+// Player win function - alert player that they have won, increase win count by one.
