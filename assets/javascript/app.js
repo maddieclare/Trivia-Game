@@ -11,7 +11,7 @@ let questionArray = [
   {
     question: "What is the second most commonly-spoken language in the world?",
     correctAnswer: "Spanish",
-    options: ["French", "Chinese", "Spanish", "English"],
+    options: ["French", "Mandarin", "Spanish", "English"],
     alreadyAsked: false
   },
   {

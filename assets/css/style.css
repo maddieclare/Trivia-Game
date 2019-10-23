@@ -1,0 +1,28 @@
+body {
+    background-image: url("../images/background.png");
+}
+
+.jumbotron {
+    background-color: #FF8103 !important;
+}
+
+.btn-primary {
+    background-color: #FF8103;
+    border-color: #FF8103;
+}
+
+.correct-answer {
+    color: red;
+}
+
+.score {
+    font-size: 30px;
+}
+
+.final-wins {
+    color: forestgreen;
+}
+
+.final-losses {
+    color: red;
+}

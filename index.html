@@ -10,6 +10,7 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="assets/css/style.css" />
 
     <script src="https://code.jquery.com/jquery.js"></script>
     <title>Trivia Game</title>
@@ -22,16 +23,23 @@
         </div>
       </div>
       <div class="row">
-        <div class="alerts">
-          <h2 class="correct-incorrect"></h2>
-          <p class="final-wins"></p>
-          <p class="final-losses"></p>
-          <p class="correct-answer"></p>
-          <p class="next-question">Loading next question...</p>
-          <button class="reset-button btn-primary">Restart</button>
+        <div class="col-md-12">
+          <div class="alerts card text-center">
+            <div class="card-body justify-content-center">
+              <h2 class="correct-incorrect card-title"></h2>
+              <br>
+              <h4 class="final-wins"></h4>
+              <h4 class="final-losses"></h4>
+              <h4 class="correct-answer"></h4>
+              <br>
+              <p class="next-question">Loading next question...</p>
+              <button class="reset-button btn-primary rounded">Restart</button>
+            </div>
+          </div>
         </div>
         <div class="container game">
           <div class="card">
+            <br />
             <h2 class="timer text-center">Time remaining: 10</h2>
             <br />
             <h3 class="current-question text-center"></h3>
